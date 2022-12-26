@@ -5,15 +5,6 @@ Created on Fri Dec 16 11:33:48 2022
 @author: MaxKo
 """
 
-#Algorithm:
-#Let's say the distance between any two nodes is T.
-#The value of node 1 is K1, and the value of node 2 is K2.
-#Opening node 2 will release
-#(Time left - T)*K2 pressure units.
-#Ideal case: Single valve in AA. 29 * K2 pressure units.
-#For n nodes: (30-N1)K1 + (30-N1-N2)K2 + ... + (30-Sum of N)Kn
-#Or: 30(Sum of K)-N1(Sum of K)-N2(All but K1)-Nn(Kn)
-
 from itertools import combinations
 
 def BFS(root, goal, matrix):
@@ -32,7 +23,6 @@ def BFS(root, goal, matrix):
 def GetMaxPressure(root, time, nodes, explored, pathLengths):
     unseen = set(nodes) - set(explored)
     readings = []
-    path = []
     for node in unseen:
         t = time - pathLengths[frozenset([root, node])]
         if t < 0:
@@ -40,14 +30,12 @@ def GetMaxPressure(root, time, nodes, explored, pathLengths):
         else:
             seen = explored.union(set([node]))
             score = node[1] * t
-            path = [node[0]]
             new = GetMaxPressure(node, t, nodes, seen, pathLengths)
-            path += new[1]
-            readings.append((new[0] + score, path))
+            readings.append((new[0] + score, [node[0]] + new[1]))
     if readings != []:
         return (max(readings))
     else:
-        return (0, path)
+        return (0, [])
     
 valves = []
 tunnels = []

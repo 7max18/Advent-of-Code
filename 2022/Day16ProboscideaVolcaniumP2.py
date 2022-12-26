@@ -5,15 +5,6 @@ Created on Fri Dec 16 11:33:48 2022
 @author: MaxKo
 """
 
-#Algorithm:
-#Let's say the distance between any two nodes is T.
-#The value of node 1 is K1, and the value of node 2 is K2.
-#Opening node 2 will release
-#(Time left - T)*K2 pressure units.
-#Ideal case: Single valve in AA. 29 * K2 pressure units.
-#For n nodes: (30-N1)K1 + (30-N1-N2)K2 + ... + (30-Sum of N)Kn
-#Or: 30(Sum of K)-N1(Sum of K)-N2(All but K1)-Nn(Kn)
-
 from itertools import combinations
 
 def BFS(root, goal, matrix):
@@ -32,7 +23,6 @@ def BFS(root, goal, matrix):
 def GetMaxPressure(root, time, nodes, explored, pathLengths):
     unseen = set(nodes) - set(explored)
     readings = []
-    path = []
     for node in unseen:
         t = time - pathLengths[frozenset([root, node])]
         if t < 0:
@@ -40,33 +30,24 @@ def GetMaxPressure(root, time, nodes, explored, pathLengths):
         else:
             seen = explored.union(set([node]))
             score = node[1] * t
-            path = [node[0]]
-            new = GetMaxPressure(node, t, nodes, seen, pathLengths)
-            path += new[1]
-            readings.append((new[0] + score, path))
+            newPaths = GetMaxPressure(node, t, nodes, seen, pathLengths)
+            for new in newPaths:
+                readings.append((new[0] + score, [node[0]] + new[1]))
     if readings != []:
-        return (max(readings))
+        return readings
     else:
-        return (0, path)
-
-def GetPartitions(a):
-    b = list()
-    for l in range(0, len(a) + 1):
-        for c in combinations(a, l):
-            b.append(set(c))
-    b = sorted(b, key = lambda a:len(a))
-    return b
+        return [(0, [])]
         
 def SearchScores(scoresList):
     max = 0
     for i in range(0, len(scoresList)):
-        score1 = scoresList[i][1]
+        score1 = scoresList[i][0]
         for j in range(i, len(scoresList)):
-            score2 = scoresList[j][1]
+            score2 = scoresList[j][0]
             potentialScore = score1 + score2
             if potentialScore < max:
                 break
-            elif potentialScore > max and scoresList[i][0].isdisjoint(scoresList[j][0]):
+            elif potentialScore > max and set(scoresList[i][1]).isdisjoint(set(scoresList[j][1])):
                 max = potentialScore
     return max
 
@@ -110,17 +91,8 @@ start = start[1]
 remainingTime = 26
 visited = set()
 
-# partitions = GetPartitions(set(workingValves) - set([('AA', 0)]))
-# allScores = []
-
-# for p in partitions:
-#     scores = GetMaxPressure(start, remainingTime, p, set(), tunnelLengths)
-#     scores.sort(reverse=True)
-#     allScores.append((p, scores[0]))
-    
-# maxScore = SearchScores(allScores)
-# print(maxScore)
-
-maxScore = GetMaxPressure(start, remainingTime, set(workingValves) - set([('AA', 0)]), visited, tunnelLengths)
+scores = GetMaxPressure(start, remainingTime, set(workingValves) - set([('AA', 0)]), visited, tunnelLengths)
+scores.sort(reverse=True)
+maxScore = SearchScores(scores)
 print(maxScore)
 
