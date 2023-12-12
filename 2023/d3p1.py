@@ -37,7 +37,7 @@ for i, y in enumerate(schematic):
             if j < mark:
                 continue
             part_num, end_pos = extract_part(y, j)
-            if scan_for_symbols(schematic, j, i) :
+            if scan_for_symbols(schematic, j, i):
                 parts.append(part_num)
                 mark = end_pos
 
