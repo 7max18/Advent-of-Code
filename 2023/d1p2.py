@@ -24,7 +24,6 @@ with open("Input/Day1Input.txt") as f:
             last = num_dict[last]
         else:
             last = int(last)
-        print(first+last)
         calibration_value += first+last
         
 print(calibration_value)
