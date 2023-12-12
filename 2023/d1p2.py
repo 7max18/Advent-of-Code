@@ -1,4 +1,4 @@
-import re
+import regex
 
 num_dict = {"one":1,
             "two":2,
@@ -14,18 +14,17 @@ num_dict = {"one":1,
 calibration_value = 0
 with open("Input/Day1Input.txt") as f:
     for line in f.readlines():
-        for char in line:
-            if char.isdigit():
-                first = 10*int(char)
-                break
-            elif [re.search(line, num) for num in num_dict]:
-                last = 10*num_dict[[re.search(line, num).group() for num in num_dict][0]]
-        for char in line[::-1]:
-            if char.isdigit():
-                last = char
-                break
-            elif [re.search(line[:], num) for num in num_dict]:
-                last = num_dict[[re.search(line, num).group() for num in num_dict][0]]
+        first = regex.search(r"(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)|(zero)|[1234567890]", line).group()
+        if first in num_dict:
+            first = 10*num_dict[first]
+        else:
+            first = 10*int(first)
+        last = regex.search(r"(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)|(zero)|[1234567890]", line, flags=regex.REVERSE).group()
+        if last in num_dict:
+            last = num_dict[last]
+        else:
+            last = int(last)
+        print(first+last)
         calibration_value += first+last
         
 print(calibration_value)

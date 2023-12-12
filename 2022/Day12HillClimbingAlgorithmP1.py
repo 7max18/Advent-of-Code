@@ -34,7 +34,7 @@ def ReconstructPath(history, cur):
         X.append(coord[1])
         Y.append(coord[0])
     heatMap = np.array(heightMap)
-    mpl.rcParams['font.family'] = 'Avenir'
+
     mpl.rcParams['font.size'] = 18
     mpl.rcParams['axes.linewidth'] = 2
     fig = plt.figure(figsize=(heatMap.shape[0],heatMap.shape[1]))
