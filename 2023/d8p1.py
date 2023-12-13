@@ -1,5 +1,3 @@
-
-
 with open("Input/Day8Input.txt") as f:
     lines = f.readlines()
     instructions = lines[0]
