@@ -1,5 +1,3 @@
-# If # and 
-
 def get_solutions(row, clues, pos=0, counter=0, clue_index=0):
     for row_index, condition in list(enumerate(row))[pos:]:
         if condition == ".":
@@ -13,6 +11,8 @@ def get_solutions(row, clues, pos=0, counter=0, clue_index=0):
             if clue_index == len(clues):
                 return 0
             counter += 1
+            if counter > clues[clue_index]:
+                return 0
         elif condition == "?":
             damaged = get_solutions(row[:row_index]+"#"+row[row_index+1:], clues, row_index, counter, clue_index)
             operational = get_solutions(row[:row_index]+"."+row[row_index+1:], clues, row_index, counter, clue_index)
