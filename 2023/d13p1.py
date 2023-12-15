@@ -22,7 +22,7 @@ for pattern in patterns:
                 if pattern[top-i] != pattern[bottom+i]:
                     break
             else:
-                checksum += 100 * bottom
+                checksum = 100 * bottom
                 break
     if checksum:
         total += checksum
@@ -34,7 +34,7 @@ for pattern in patterns:
                 if "".join([row[left-i] for row in pattern]) != "".join([row[right+i] for row in pattern]):
                     break
             else:
-                checksum += right
+                checksum = right
                 break
     total += checksum
     
