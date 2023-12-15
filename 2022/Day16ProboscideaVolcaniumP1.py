@@ -5,6 +5,15 @@ Created on Fri Dec 16 11:33:48 2022
 @author: MaxKo
 """
 
+#Algorithm:
+#Let's say the distance between any two nodes is T.
+#The value of node 1 is K1, and the value of node 2 is K2.
+#Opening node 2 will release
+#(Time left - T)*K2 pressure units.
+#Ideal case: Single valve in AA. 29 * K2 pressure units.
+#For n nodes: (30-N1)K1 + (30-N1-N2)K2 + ... + (30-Sum of N)Kn
+#Or: 30(Sum of K)-N1(Sum of K)-N2(All but K1)-Nn(Kn)
+
 from itertools import combinations
 
 def BFS(root, goal, matrix):
@@ -21,21 +30,22 @@ def BFS(root, goal, matrix):
                 pathLevels[index] = pathLevels[vertex] + 1
                 
 def GetMaxPressure(root, time, nodes, explored, pathLengths):
-    unseen = set(nodes) - set(explored)
+    unseen = nodes - explored
+    if unseen == [] or time <= 0:
+        return [0]
     readings = []
     for node in unseen:
         t = time - pathLengths[frozenset([root, node])]
-        if t < 0:
-            continue
-        else:
-            seen = explored.union(set([node]))
-            score = node[1] * t
-            new = GetMaxPressure(node, t, nodes, seen, pathLengths)
-            readings.append((new[0] + score, [node[0]] + new[1]))
+        seen = explored.union(set([node]))
+        score = node[1] * t
+        new = GetMaxPressure(node, t, nodes, seen, pathLengths)
+        for i in range(0, len(new)):
+            new[i] += score
+        readings += new
     if readings != []:
-        return (max(readings))
+        return readings
     else:
-        return (0, [])
+        return [0]
     
 valves = []
 tunnels = []
@@ -79,8 +89,10 @@ start = start[1]
 
 remainingTime = 30
 visited = set()
-
-maxScore = GetMaxPressure(start, remainingTime, list(set(workingValves) - set([('AA', 0)])), visited, tunnelLengths)
+ 
+scores = GetMaxPressure(start, remainingTime, set(workingValves) - set([('AA', 0)]), visited, tunnelLengths)
+scores.sort(reverse=True)
+maxScore = scores[0]
 print(maxScore)
     
 

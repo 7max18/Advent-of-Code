@@ -36,7 +36,7 @@ def LandedCheck(chamber, lowerBound, upperBound):
                     return True
     return False
     
-fallCount = 2022
+fallCount = 290 + 1755
 
 shapes = [[[0, 0, 2, 2, 2, 2, 0]],
           [[0, 0, 0, 2, 0, 0, 0],
@@ -64,7 +64,7 @@ chamber = []
 shapeIndex = 0
 
 with open('Input/Day17Input.txt') as f:
-    for i in range(0, fallCount):
+    for i in range(fallCount):
         #Next rock falls
         chamber.extend(copy.deepcopy(buffer))
         chamber.extend(copy.deepcopy(shapes[shapeIndex]))
@@ -86,7 +86,7 @@ with open('Input/Day17Input.txt') as f:
             elif wind == '>':
                 if RightWindCheck(chamber, lowerBound, upperBound):
                     for row in range(lowerBound, upperBound):
-                        for column in range(len(chamber[0]) - 1, -1, -1):
+                        for column in range(len(chamber[0])-1, -1, -1):
                             if chamber[row][column] == 2:
                                 chamber[row][column + 1] = 2
                                 chamber[row][column] = 0

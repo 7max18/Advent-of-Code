@@ -10,7 +10,7 @@ from itertools import combinations
 MAX_COORD = 4000000
 
 def GetEdges(sensor, distance):
-    equations = []
+    equations = list()
     equations.append(([1, 1], sensor[0] + sensor[1] + distance))
     equations.append(([-1, 1], -sensor[0] + sensor[1] + distance))
     equations.append(([1, -1], sensor[0] - sensor[1] + distance))
@@ -18,27 +18,27 @@ def GetEdges(sensor, distance):
     return equations
     
 def GetIntersections(firstBorder, secondBorder):
-    solutions = []
+    solutions = list()
     firstLine = firstBorder[0]
     secondLine = secondBorder[1]
     A = np.array([firstLine[0], secondLine[0]], dtype='int64')
     B = np.array([firstLine[1], secondLine[1]], dtype='int64')
-    solutions.append(tuple(np.linalg.inv(A).dot(B)))
+    solutions.append(tuple(np.linalg.solve(A,B).astype('int64')))
     firstLine = firstBorder[2]
     secondLine = secondBorder[3]
     A = np.array([firstLine[0], secondLine[0]], dtype='int64')
     B = np.array([firstLine[1], secondLine[1]], dtype='int64')
-    solutions.append(tuple(np.linalg.inv(A).dot(B)))
+    solutions.append(tuple(np.linalg.solve(A,B).astype('int64')))
     firstLine = firstBorder[2]
     secondLine = secondBorder[0]
     A = np.array([firstLine[0], secondLine[0]], dtype='int64')
     B = np.array([firstLine[1], secondLine[1]], dtype='int64')
-    solutions.append(tuple(np.linalg.inv(A).dot(B)))
+    solutions.append(tuple(np.linalg.solve(A,B).astype('int64')))
     firstLine = firstBorder[1]
     secondLine = secondBorder[3]
     A = np.array([firstLine[0], secondLine[0]], dtype='int64')
     B = np.array([firstLine[1], secondLine[1]], dtype='int64')
-    solutions.append(tuple(np.linalg.inv(A).dot(B).astype('int64')))
+    solutions.append(tuple(np.linalg.solve(A,B).astype('int64')))
     return solutions
 
 def InRangeCheck(point, sensors):
@@ -50,7 +50,7 @@ def InRangeCheck(point, sensors):
         if pointDistance <= signalRange:
             return False
     return True
-areaMap = []
+areaMap = list()
 
 with open('Input/Day15Input.txt') as f:
     while True:
@@ -72,8 +72,7 @@ for SBPair in areaMap:
 
 for system in list(combinations(signalBorders, 2)):
     candidates.update(GetIntersections(system[0], system[1]))
-    candidates.update(GetIntersections(system[1], system[0]))
-
+    
 for candidate in candidates:
     if InRangeCheck(candidate, areaMap):
         tuningFrequency = candidate[0] * MAX_COORD + candidate[1]
