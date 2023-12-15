@@ -1,6 +1,7 @@
 #1. Scan the rows and columns for pairs that are one character off.
-#2. Propagate inward and outward; if there are no other differences, the smudge has been found.
+#2. Propagate inward and outward ; if there are no other differences, the smudge has been found.
 #3. Extract checksum using the new line of reflection.
+#Note: Since each line of reflection is between and never on rows/columns, skip pairs an odd distance apart.
 
 patterns = list()
 
