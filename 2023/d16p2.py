@@ -53,9 +53,10 @@ def beam(contraption, pos, dir):
                     beam(contraption, [pos[0]-1,pos[1]], [-1,0])
                 else:
                     pos = [pos[x] + dir[x] for x in range(2)]
-start_time = perf_counter()
+
 with open("Input/Day16Input.txt") as f:
     contraption = [line.strip() for line in f.readlines()]
+
 starts = list()
 starts += [([x,0],[0,1]) for x in range(len(contraption))]
 starts += [([len(contraption)-1,x],[-1,0]) for x in range(len(contraption[0]))]
@@ -67,4 +68,5 @@ for start in starts:
     visited_nodes = set()
     beam(contraption, start[0], start[1])
     energies.append(len(energized))
+    
 print(max(energies))
