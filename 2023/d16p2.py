@@ -62,11 +62,12 @@ starts += [([x,0],[0,1]) for x in range(len(contraption))]
 starts += [([len(contraption)-1,x],[-1,0]) for x in range(len(contraption[0]))]
 starts += [([x,len(contraption[0])-1],[0,-1]) for x in range(len(contraption))]
 starts += [([0,x],[1,0]) for x in range(len(contraption[0]))]
+
 energies = list()
 for start in starts:
     energized = set()
     visited_nodes = set()
     beam(contraption, start[0], start[1])
     energies.append(len(energized))
-    
+
 print(max(energies))
