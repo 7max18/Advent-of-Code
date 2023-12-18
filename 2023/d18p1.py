@@ -18,8 +18,6 @@ turt.penup()
 border_points = 0
 shoelace = 0
 vertices = [[0,0]]
-boundary_points = set()
-cw_orientation = True
 for index, direction in enumerate(directions):
     turt.color(direction[2])
     cur = vertices[-1].copy()
