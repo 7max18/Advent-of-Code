@@ -5,9 +5,7 @@
 #There are four long chains of flip-flops, with each link connected to the same conjunction.
 #Since flip-flops form chains, the period doubles between each.
 #Hence, each quadrant can be represented as a large binary number.
-#Each reset affects the root of the chain, effectively zeroing everyting 
-#save for the bits represented by the ones the conjunction connects to
-#and any non-inputs in the chain which, will all be already off.
+#Each reset affects the root of the chain, effectively zeroing everyting.
 #Find the number represented by the inputs of the four main conjunctions, followed by the lcm of those numbers.
 
 from math import lcm
