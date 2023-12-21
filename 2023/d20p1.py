@@ -79,6 +79,6 @@ for press in range(1000):
             low_pulses += 1
         if type(next_pulse[2]) != str:
             next_pulse[2].pulse(next_pulse[1], next_pulse[0])
-        
+    
 print(low_pulses*high_pulses)
 
