@@ -1,10 +1,10 @@
-from math import trunc, isclose
+from math import isclose
 from numpy import polyfit, poly1d
 
 TOTAL_STEPS = 26501365
 
 def wrapped_pos(position, grid):
-    return grid[position[0]-len(grid)*trunc(position[0]/len(grid))][position[1]-len(grid[0])*trunc(position[1]/len(grid[0]))]
+    return grid[position[0]%len(grid)][position[1]%len(grid[0])]
 
 def get_steps(current: set, even_parity, step_range):
     visited = current.copy()
@@ -52,7 +52,7 @@ def get_steps(current: set, even_parity, step_range):
         current = next_steps
     return results
 
-with open("Day21Input.txt") as f:
+with open("./Day21Input.txt") as f:
     gardens = [line.strip() for line in f.readlines()]
 
 for row_num, row in enumerate(gardens):
@@ -81,5 +81,6 @@ for i in range(len(xp)-len(gardens)):
         if all([isclose(x, y, rel_tol=1e-5) for x, y in zip(list(quadratics[-1].coeffs), list(quadratics[-len(gardens)-1].coeffs))]):
             offset = len(quadratics) - len(gardens)
             break
+
 print(round(quadratics[(TOTAL_STEPS-offset)%len(gardens)+offset](TOTAL_STEPS)))
 
