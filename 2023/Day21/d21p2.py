@@ -32,21 +32,21 @@ def get_steps(current: set, even_parity, step_range):
             south_one_wrapped = wrapped_pos(south_one, gardens)
             west_one_wrapped = wrapped_pos(west_one, gardens)
             east_one_wrapped = wrapped_pos(east_one, gardens)
-            if wrapped_pos(north_two, gardens) != "#" and north_one_wrapped != "#":
+            if north_two not in visited and wrapped_pos(north_two, gardens) != "#" and north_one_wrapped != "#":
                 next_steps.add(north_two)
-            if wrapped_pos(south_two, gardens) != "#" and south_one_wrapped != "#":
+            if south_two not in visited and wrapped_pos(south_two, gardens) != "#" and south_one_wrapped != "#":
                 next_steps.add(south_two)
-            if wrapped_pos(west_two, gardens) != "#" and west_one_wrapped != "#":
+            if west_two not in visited and wrapped_pos(west_two, gardens) != "#" and west_one_wrapped != "#":
                 next_steps.add(west_two)
-            if wrapped_pos(east_two, gardens) != "#" and east_one_wrapped != "#":
+            if east_two not in visited and wrapped_pos(east_two, gardens) != "#" and east_one_wrapped != "#":
                 next_steps.add(east_two)
-            if wrapped_pos(northwest, gardens) != "#" and (west_one_wrapped != "#" or north_one_wrapped != "#"):
+            if northwest not in visited and wrapped_pos(northwest, gardens) != "#" and (west_one_wrapped != "#" or north_one_wrapped != "#"):
                 next_steps.add(northwest)
-            if wrapped_pos(northeast, gardens) != "#" and (east_one_wrapped != "#" or north_one_wrapped != "#"):
+            if northeast not in visited and wrapped_pos(northeast, gardens) != "#" and (east_one_wrapped != "#" or north_one_wrapped != "#"):
                 next_steps.add(northeast)
-            if wrapped_pos(southwest, gardens) != "#" and (west_one_wrapped != "#" or south_one_wrapped != "#"):
+            if southwest not in visited and wrapped_pos(southwest, gardens) != "#" and (west_one_wrapped != "#" or south_one_wrapped != "#"):
                 next_steps.add(southwest)
-            if wrapped_pos(southeast, gardens) != "#" and (east_one_wrapped != "#" or south_one_wrapped != "#"):
+            if southeast not in visited and wrapped_pos(southeast, gardens) != "#" and (east_one_wrapped != "#" or south_one_wrapped != "#"):
                 next_steps.add(southeast)
         visited.update(next_steps)
         current = next_steps
