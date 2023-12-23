@@ -49,16 +49,16 @@ while not all([b[2] for b in bricks]):
     for i, brick in [x for x in enumerate(bricks) if not x[1][2]]:
         if brick[0][2] == 1:
             brick[2] = True
-    for i, brick in [x for x in enumerate(bricks) if not x[1][2]]:       
         for j, resting in [x for x in enumerate(bricks) if x[1][2]]:
             if not (brick[0][0] > resting[1][0] or resting[0][0] > brick[1][0]) and \
                 not (brick[0][1] > resting[1][1] or resting[0][1] > brick[1][1]) and \
                 brick[0][2] == resting[1][2] + 1:
                 brick[2] = True
                 brick_supports[j][i] = True
-    for i, brick in [x for x in enumerate(bricks) if not x[1][2]]:
-        bricks[i][0][2] -= 1
-        bricks[i][1][2] -= 1
+        #Make brick fall otherwise
+        if not brick[2]:
+            brick[0][2] -= 1
+            brick[1][2] -= 1
 #[print(line) for line in brick_supports]
 
 #Use adjacency matrix to identify which bricks support other bricks once all have fallen
