@@ -1,7 +1,7 @@
 import heapq, time
 #Compare direction and steps
 def dijkstra(map, start, end):
-    visited  = distances = [[[[False for w in range(3)] for x in range(4)] for y in range(len(map[0]))] for z in range(len(map))]
+    visited = [[[[False for w in range(3)] for x in range(4)] for y in range(len(map[0]))] for z in range(len(map))]
     distances = [[[[10e7 for w in range(3)] for x in range(4)] for y in range(len(map[0]))] for z in range(len(map))]
     distances[start[1]][start[0]] = [[0,0,0] for x in range(4)]
     pq = list()
