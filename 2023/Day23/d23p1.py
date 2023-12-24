@@ -23,7 +23,7 @@ def traverse(pos, direction):
         temp.remove(pos)
         topo_ordering.insert(0, pos)
         dag[tuple(pos)] = dict()
-        dag[tuple(pos)][tuple(next_node)] = -edge_weight+1
+        dag[tuple(pos)][tuple(next_node)] = -edge_weight + 1
     else:
         if trail_map[pos[0]+1][pos[1]] == "v":
             edge_weight, next_node, direction = count_steps([pos[0]+1, pos[1]], 2)
@@ -96,16 +96,15 @@ def longest_path(dag, start, end):
         u = pq.pop(0)
         if visited[u]:
             continue
+        visited[u] = True
         for v in dag[u]:
             alt = dist[u] + dag[u][v]
             if alt < dist[v]:
                 dist[v] = alt
                 prev[v] = u
-            pq.append(tuple(v))
+                pq.append(tuple(v))
     return -dist[tuple(end)]
-            
-
-
+        
 with open("Day23Input.txt") as f:
     trail_map = [line.strip() for line in f.readlines()]
 
@@ -118,4 +117,6 @@ temp = list()
 topo_ordering = list()
 
 traverse(pos.copy(), 2)
+print(sorted(dag.items()))
+print(topo_ordering)
 print(longest_path(dag, topo_ordering[0], topo_ordering[-1]))
