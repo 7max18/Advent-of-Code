@@ -19,7 +19,6 @@ def check_for_future(hailstone, intersection):
     elif intersection[0] > hailstone[0][0] and intersection[1] > hailstone[0][1] \
         and hailstone[1][0] > 0 and hailstone[1][1] > 0:
         return True
-    
 
             
 hailstones = list()
@@ -47,9 +46,5 @@ for pair in hailstone_pairs:
 
 print(crossing_paths)
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
 
-
-        
-
+    
