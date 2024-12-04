@@ -13,9 +13,9 @@ for report in reports:
     for i in range(len(report)-1):
         diff = report[i+1] - report[i]
         if incdec == 0:
-            if 1 <= diff <= 3:
+            if diff > 0:
                 incdec = 1
-            elif -1 >= diff >= -3:
+            elif diff < 0:
                 incdec = -1
             else:
                 break
